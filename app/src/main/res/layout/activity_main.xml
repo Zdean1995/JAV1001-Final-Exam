@@ -12,18 +12,32 @@
         android:id="@+id/txt_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="" />
 
     <Button
         android:id="@+id/btn_roll_once"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Roll Once" />
+        android:text="@string/roll_once" />
 
     <Button
         android:id="@+id/btn_roll_twice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Roll Twice" />
+        android:text="@string/roll_twice" />
+
+    <EditText
+        android:id="@+id/etxt_sides"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/etxt_multi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number" />
 
 </LinearLayout>
