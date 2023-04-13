@@ -1,10 +1,14 @@
 package com.auchtermuchty.jav1001_final_exam
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.auchtermuchty.jav1001_final_exam.Model.Die
+import com.auchtermuchty.jav1001_final_exam.Model.getDieFromString
 import com.auchtermuchty.jav1001_final_exam.databinding.ActivityMainBinding
 
 
@@ -17,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        die = Die(6,1,false)
+
         binding.etxtSides.setText((die.sides).toString())
         binding.etxtMulti.setText((die.multiple).toString())
 
@@ -76,7 +80,26 @@ class MainActivity : AppCompatActivity() {
             // this function is called after text is edited
         }
     }
-    fun changeSides(){
+    fun nullCheck(){
         die.sides = binding.etxtSides.text.toString().toInt()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val sharedPref = this.getPreferences(Context.MODE_PRIVATE) ?: return
+        with (sharedPref.edit()) {
+            putString("die", die.toString())
+            apply()
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val pref = this.getPreferences(Context.MODE_PRIVATE)
+        die = if(pref.contains("die")){
+            getDieFromString(pref.getString("die", null)!!)
+        } else {
+            Die(6, 1, false)
+        }
     }
 }

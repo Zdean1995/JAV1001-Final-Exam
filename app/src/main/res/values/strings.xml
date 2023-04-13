@@ -2,6 +2,6 @@
     <string name="app_name">jav1001-Final-Exam</string>
     <string name="roll_once">Roll Once</string>
     <string name="roll_twice">Roll Twice</string>
-    <string name="roll_once_result">%s</string>
-    <string name="roll_twice_result">%s and %s</string>
+    <string name="roll_once_result">You Rolled %s</string>
+    <string name="roll_twice_result">You Rolled %s and %s</string>
 </resources>
