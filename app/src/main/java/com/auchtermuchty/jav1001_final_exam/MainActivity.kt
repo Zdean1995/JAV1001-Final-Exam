@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //gets information about the die from preferences when the activity is created
         val pref = this.getPreferences(Context.MODE_PRIVATE)
         die = if(pref.contains("die")){
             getDieFromString(pref.getString("die", null)!!)
@@ -27,10 +28,14 @@ class MainActivity : AppCompatActivity() {
             Die(6, 1, false)
         }
 
+        //sets the ui to the die's attributes
         binding.etxtSides.setText((die.sides).toString())
         binding.etxtMulti.setText((die.multiple).toString())
+        binding.swtTrueCount.isChecked = die.trueCount
 
-
+        //the onclicklistener for the roll once button.
+        //also clears the second result text view if the roll twice button was
+        //pressed before
         binding.btnRollOnce.setOnClickListener {
             if(!nullCheck()) {
                 val result = die.roll()
@@ -39,6 +44,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        //the onclicklistener for the roll twice button
         binding.btnRollTwice.setOnClickListener {
             if(!nullCheck()) {
                 val firstResult = die.roll()
@@ -50,18 +56,31 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        //the onclicklistener for the true count switch
+        binding.swtTrueCount.setOnClickListener {
+            die.trueCount = binding.swtTrueCount.isChecked
+        }
+
+        //assigning the watchers to the edittexts
         binding.etxtSides.addTextChangedListener(sidesWatcher)
         binding.etxtMulti.addTextChangedListener(multiWatcher)
     }
 
-    //https://www.geeksforgeeks.org/ontextchangedlistener-in-android/
+    //the click watcher for the edit texts.
+    // https://www.geeksforgeeks.org/ontextchangedlistener-in-android/
     private var sidesWatcher: TextWatcher = object : TextWatcher {
+        //the beforeTextChanged and afterTextChanged methods aren't
+        // used but overriding them is required
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-            // this function is called before text is edited
+
         }
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            // this function is called when text is edited
+            /*
+            this is so the edittext can be blank without crashing.  It's also why the properties
+            for the die class are nullable. Originally I had it so that when the edittexts were
+            cleared they were reset to 1.  This felt a little awkward to uses so I set this up.
+            */
             if(s.toString() == "") {
                 die.sides = null
             } else {
@@ -70,13 +89,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun afterTextChanged(s: Editable) {
-            // this function is called after text is edited
         }
     }
 
     private var multiWatcher: TextWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-            // this function is called before text is edited
         }
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
@@ -88,9 +105,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun afterTextChanged(s: Editable) {
-            // this function is called after text is edited
         }
     }
+    //The method for checking if the sides or multiple properties of the die are 0 or null.
+    //this is to stop the roll from crashing if either value is 0 or null
     private fun nullCheck() : Boolean{
         var dieHasNullValues = false
         if(die.multiple == null || die.multiple == 0) {
@@ -106,6 +124,8 @@ class MainActivity : AppCompatActivity() {
         return dieHasNullValues
     }
 
+    //the overriden onStop method is used to save the die's values to preferences.
+    //I found onStop worked best for this but onDestroy would probably work too
     override fun onStop() {
         super.onStop()
         val sharedPref = this.getPreferences(Context.MODE_PRIVATE) ?: return

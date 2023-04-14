@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">jav1001-Final-Exam</string>
+    <string name="app_name">Dice Roller</string>
     <string name="roll_once">Roll Once</string>
     <string name="roll_twice">Roll Twice</string>
     <string name="roll_once_result">You Rolled %s</string>
@@ -7,4 +7,6 @@
     <string name="txt_sides_start">This Die Has</string>
     <string name="txt_sides_end">Sides</string>
     <string name="txt_multiple">And rolls in multiples of</string>
+    <string name="swt_true_count">Start at 0?</string>
+    <string name="img_die_description">A die with question marks on all sides</string>
 </resources>
