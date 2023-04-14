@@ -3,5 +3,8 @@
     <string name="roll_once">Roll Once</string>
     <string name="roll_twice">Roll Twice</string>
     <string name="roll_once_result">You Rolled %s</string>
-    <string name="roll_twice_result">You Rolled %s and %s</string>
+    <string name="roll_twice_result">and %s</string>
+    <string name="txt_sides_start">This Die Has</string>
+    <string name="txt_sides_end">Sides</string>
+    <string name="txt_multiple">And rolls in multiples of</string>
 </resources>

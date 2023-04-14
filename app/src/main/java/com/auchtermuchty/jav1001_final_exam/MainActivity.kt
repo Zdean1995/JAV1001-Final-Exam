@@ -1,14 +1,13 @@
 package com.auchtermuchty.jav1001_final_exam
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.auchtermuchty.jav1001_final_exam.Model.Die
-import com.auchtermuchty.jav1001_final_exam.Model.getDieFromString
+import com.auchtermuchty.jav1001_final_exam.model.Die
+import com.auchtermuchty.jav1001_final_exam.model.getDieFromString
 import com.auchtermuchty.jav1001_final_exam.databinding.ActivityMainBinding
 
 
@@ -21,20 +20,34 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val pref = this.getPreferences(Context.MODE_PRIVATE)
+        die = if(pref.contains("die")){
+            getDieFromString(pref.getString("die", null)!!)
+        } else {
+            Die(6, 1, false)
+        }
 
         binding.etxtSides.setText((die.sides).toString())
         binding.etxtMulti.setText((die.multiple).toString())
 
 
         binding.btnRollOnce.setOnClickListener {
-            val result = die.roll()
-            binding.txtResult.text = resources.getString(R.string.roll_once_result, result)
+            if(!nullCheck()) {
+                val result = die.roll()
+                binding.txtResult.text = resources.getString(R.string.roll_once_result, result)
+                binding.txtSecondResult.text = ""
+            }
         }
 
         binding.btnRollTwice.setOnClickListener {
-            val firstResult = die.roll()
-            val secondResult = die.roll()
-            binding.txtResult.text = resources.getString(R.string.roll_twice_result, firstResult, secondResult)
+            if(!nullCheck()) {
+                val firstResult = die.roll()
+                val secondResult = die.roll()
+                binding.txtResult.text =
+                    resources.getString(R.string.roll_once_result, firstResult)
+                binding.txtSecondResult.text =
+                    resources.getString(R.string.roll_twice_result, secondResult)
+            }
         }
 
         binding.etxtSides.addTextChangedListener(sidesWatcher)
@@ -42,18 +55,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     //https://www.geeksforgeeks.org/ontextchangedlistener-in-android/
-    var sidesWatcher: TextWatcher = object : TextWatcher {
+    private var sidesWatcher: TextWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             // this function is called before text is edited
         }
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
             // this function is called when text is edited
-            try {
+            if(s.toString() == "") {
+                die.sides = null
+            } else {
                 die.sides = s.toString().toInt()
-            } catch (e: Exception) {
-                binding.etxtSides.setText("1")
-                die.multiple = 1
             }
         }
 
@@ -62,17 +74,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    var multiWatcher: TextWatcher = object : TextWatcher {
+    private var multiWatcher: TextWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             // this function is called before text is edited
         }
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            try {
+            if(s.toString() == "") {
+                die.multiple = null
+            } else {
                 die.multiple = s.toString().toInt()
-            } catch (e: Exception) {
-                binding.etxtMulti.setText("1")
-                die.multiple = 1
             }
         }
 
@@ -80,8 +91,19 @@ class MainActivity : AppCompatActivity() {
             // this function is called after text is edited
         }
     }
-    fun nullCheck(){
-        die.sides = binding.etxtSides.text.toString().toInt()
+    private fun nullCheck() : Boolean{
+        var dieHasNullValues = false
+        if(die.multiple == null || die.multiple == 0) {
+            val toast = Toast.makeText(this, "Please enter a multiplication value", Toast.LENGTH_SHORT)
+            toast.show()
+            dieHasNullValues = true
+        }
+        if(die.sides == null || die.sides == 0) {
+            val toast = Toast.makeText(this, "Please enter a value for sides", Toast.LENGTH_SHORT)
+            toast.show()
+            dieHasNullValues = true
+        }
+        return dieHasNullValues
     }
 
     override fun onStop() {
@@ -90,16 +112,6 @@ class MainActivity : AppCompatActivity() {
         with (sharedPref.edit()) {
             putString("die", die.toString())
             apply()
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        val pref = this.getPreferences(Context.MODE_PRIVATE)
-        die = if(pref.contains("die")){
-            getDieFromString(pref.getString("die", null)!!)
-        } else {
-            Die(6, 1, false)
         }
     }
 }

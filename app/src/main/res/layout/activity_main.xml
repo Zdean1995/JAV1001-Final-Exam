@@ -5,8 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
     tools:context=".MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image"
+            app:layout_constraintDimensionRatio="H,1:1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/die"
+            style="@style/img_die_da" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/txt_result"
+        style="@style/info_text"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="" />
+    <TextView
+        android:id="@+id/txt_second_result"
+        style="@style/info_text"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,27 +44,27 @@
 
         <TextView
             android:id="@+id/txt_sides_start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="This Die Has "
-            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/txt_sides_start"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/info_text" />
+
         <EditText
             android:id="@+id/etxt_sides"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:inputType="number"
-            app:layout_constraintStart_toEndOf="@id/txt_sides_start"
-            app:layout_constraintTop_toTopOf="parent"
+            android:maxLength="5"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/txt_sides_end"/>
+            app:layout_constraintEnd_toStartOf="@id/txt_sides_end"
+            app:layout_constraintStart_toEndOf="@id/txt_sides_start"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/txt_sides_end"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sides"
+            style="@style/info_text"
+            android:text="@string/txt_sides_end"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -46,33 +75,46 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="And rolls in multiples of" />
+            style="@style/info_text"
+            android:textSize="30sp"
+            android:text="@string/txt_multiple" />
 
         <EditText
             android:id="@+id/etxt_multi"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:ems="10"
-            android:inputType="number" />
+            android:inputType="number"
+            android:maxLength="4" />
 
     </LinearLayout>
-    <TextView
-        android:id="@+id/txt_result"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="" />
 
-    <Button
-        android:id="@+id/btn_roll_once"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/roll_once" />
+        android:orientation="horizontal"
+        android:gravity="center">
 
-    <Button
-        android:id="@+id/btn_roll_twice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/roll_twice" />
+        <Button
+            android:id="@+id/btn_roll_once"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="@string/roll_once"
+            style="@style/btn_roll"
+            app:layout_constraintDimensionRatio="H,1:1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_roll_twice"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_roll_twice"
+            android:text="@string/roll_twice"
+            app:layout_constraintDimensionRatio="H,1:1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn_roll_once"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/btn_roll" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

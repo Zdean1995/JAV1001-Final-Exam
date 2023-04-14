@@ -1,4 +1,4 @@
-package com.auchtermuchty.jav1001_final_exam.Model
+package com.auchtermuchty.jav1001_final_exam.model
 
 import kotlin.random.Random
 
@@ -6,11 +6,8 @@ import kotlin.random.Random
 class Die(var sides: Int?, var multiple: Int?, var trueCount: Boolean) {
     fun roll(): String{
         //using https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.random/-random/
-        return if(sides == null) {
+        return if(sides == null || multiple == null) {
             return "-1"
-        }
-        else if(multiple == null) {
-            return "-2"
         }
         else if(trueCount){
             (Random.nextInt(0, sides!!) * multiple!!).toString()
