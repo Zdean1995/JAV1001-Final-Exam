@@ -19,7 +19,8 @@ have 1 die that can be customized.
         android:layout_height="wrap_content">
 
         <!--I thought that the question mark die would represent the custom aspect
-        of the app, but it sorta looks like a question mark block from super mario or something-->
+        of the app, but it sorta looks like a question mark block from super mario or something
+        Made using this cool website I found: https://game-icons.net-->
         <ImageView
             android:id="@+id/image"
             app:layout_constraintDimensionRatio="H,1:1"
@@ -39,7 +40,8 @@ have 1 die that can be customized.
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="" />
-
+    <!--The second text view is so the first one doesn't get bigger when the results
+    are too big-->
     <TextView
         android:id="@+id/txt_second_result"
         style="@style/info_text"
@@ -48,7 +50,7 @@ have 1 die that can be customized.
         android:layout_height="wrap_content"
         android:text="" />
 
-    <!--I thought that integrating the edit texts into the sentence woul
+    <!--I thought that integrating the edit texts into the sentence would
     be more interesting-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -124,7 +126,8 @@ have 1 die that can be customized.
         android:orientation="horizontal"
         android:gravity="center">
 
-        <!--The buttons are rounded squares, like dice-->
+        <!--The buttons are rounded squares, like dice
+        I thought the grey looked better than one for the day mode.-->
         <Button
             android:id="@+id/btn_roll_once"
             android:layout_width="wrap_content"
